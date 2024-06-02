@@ -4,11 +4,13 @@ spec:
       image: /spcs_na_db/public/images_ujagtap/eap_frontend
       env:
         VUE_APP_API_URL: /api/snowpark
+    - name: eap-backend
+      image: /spcs_na_db/public/images_ujagtap/eap_backend
     - name: eap-router
       image: /spcs_na_db/public/images_ujagtap/eap_router
       env:
         FE_SERVER: localhost:8080
-        BE_SERVER: backend:8081
+        BE_SERVER: localhost:8081
   endpoints:
     - name: app
       port: 8000

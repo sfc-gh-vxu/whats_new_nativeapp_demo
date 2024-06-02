@@ -21,7 +21,7 @@ artifacts:
   # default_streamlit and default_web_endpoint are mutually exclusive, only one can be specified
   # default_streamlit: streamlit.test_streamlit
   default_web_endpoint:
-    service: services.frontend
+    service: services.app_service
     endpoint: app
 
 # ENABLE_NATIVE_APPS_VERSION_INITIALIZER_CALLBACK_IN_MANIFEST
@@ -34,6 +34,10 @@ privileges:
       description: "Permission to create services + compute pools"
   - BIND SERVICE ENDPOINT:
       description: "Required to create endpoints we can assign to functions and such"
+  - CREATE WAREHOUSE:
+      description: "Required to create a warehouse for querying data"
+
+
 
 references:
   - EAI_WIKI:
@@ -50,6 +54,6 @@ references:
       description: "Orders table in TPC-H samples"
       privileges:
         - SELECT
-      object_type: VIEW
+      object_type: TABLE
       multi_valued: false
       register_callback: setup.register_reference

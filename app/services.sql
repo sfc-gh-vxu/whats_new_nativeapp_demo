@@ -9,26 +9,19 @@ language sql
 execute as owner
 as $$
     begin
-        CREATE COMPUTE POOL if not exists backend_compute_pool
+        CREATE COMPUTE POOL if not exists wndemoapp_cp
             min_nodes = 1
             max_nodes = 1
             instance_family = CPU_X64_XS;
 
-        CREATE SERVICE if not exists services.backend
-            in compute pool backend_compute_pool
-            from spec='backend.yaml';
-        grant usage on service services.backend to application role app_public;
-        
-        CREATE COMPUTE POOL if not exists frontend_compute_pool
-            min_nodes = 1
-            max_nodes = 1
-            instance_family = CPU_X64_XS;
+        CREATE WAREHOUSE if not exists query_wh;
 
-        CREATE SERVICE if not exists services.frontend
-            in compute pool frontend_compute_pool
-            from spec='frontend.yaml'
-            EXTERNAL_ACCESS_INTEGRATIONS=(REFERENCE('EAI_WIKI'));
-        grant usage on service services.frontend to application role app_public;
+        CREATE SERVICE if not exists services.app_service
+            in compute pool wndemoapp_cp
+            from spec='spec.yml'
+            EXTERNAL_ACCESS_INTEGRATIONS = (REFERENCE('EAI_WIKI')),
+            QUERY_WAREHOUSE = query_wh;
+        grant usage on service services.app_service to application role app_public;
         
         return 'Done';
     end;
@@ -41,8 +34,7 @@ language sql
 execute as owner
 as $$
     begin
-        alter service services.frontend from spec='frontend.yaml';
-        alter service services.backend from spec='backend.yaml';
+        alter service services.app_service from spec='spec.yml';
         return 'Done';
     end;
 $$;
@@ -55,8 +47,7 @@ language sql
 execute as owner
 as $$
     begin
-        alter service services.frontend suspend;
-        alter service services.backend suspend;
+        alter service services.app_service suspend;
         return 'Done';
     end;
 $$;
@@ -68,8 +59,7 @@ language sql
 execute as owner
 as $$
     begin
-        alter service services.backend resume;
-        alter service services.frontend resume;
+        alter service services.app_service resume;
         return 'Done';
     end;
 $$;
@@ -81,10 +71,8 @@ language sql
 execute as owner
 as $$
     begin
-        drop service if exists services.frontend;
-        drop service if exists services.backend;
-        drop compute pool if exists frontend_compute_pool;
-        drop compute pool if exists backend_compute_pool;
+        drop service if exists services.app_service;
+        drop compute pool if exists wndemoapp_cp;
         return 'Done';
     end;
 $$;
@@ -98,7 +86,7 @@ as $$
     declare
         service_status varchar;
     begin
-        call system$get_service_status('services.frontend') into :service_status;
+        call system$get_service_status('services.app_service') into :service_status;
         return parse_json(:service_status)[0]['status']::varchar;
     end;
 $$;

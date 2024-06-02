@@ -6,13 +6,11 @@ REPO="images_ujagtap"
 BACKEND_IMAGE="eap_backend"
 FRONTEND_IMAGE="eap_frontend"
 ROUTER_IMAGE="eap_router"
-BACKEND_WH="backend_wh"
 
 #Make sure the target repository exists
 snow sql -q "create database if not exists $DB_NAME"
 snow sql -q "create schema if not exists $DB_NAME.$SCHEMA_NAME"
 snow sql -q "create image repository if not exists $DB_NAME.$SCHEMA_NAME.$REPO"
-snow sql -q "create warehouse if not exists $BACKEND_WH"
 
 REPO_URL=$(snow spcs image-repository url $REPO --database $DB_NAME --schema $SCHEMA_NAME)
 

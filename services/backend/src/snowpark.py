@@ -24,7 +24,7 @@ def top_clerks():
     except:
         abort(400, "Invalid arguments.")
     try:
-        df = session.table('snowflake_sample_data.tpch_sf10.orders') \
+        df = session.sql("SELECT * FROM Reference('ORDERS_TABLE')") \
                 .filter(f.col('O_ORDERDATE') >= sdt) \
                 .filter(f.col('O_ORDERDATE') <= edt) \
                 .group_by(f.col('O_CLERK')) \
@@ -32,5 +32,5 @@ def top_clerks():
                 .order_by(f.col('CLERK_TOTAL').desc()) \
                 .limit(topn)
         return make_response(jsonify([x.as_dict() for x in df.to_local_iterator()]))
-    except:
-        abort(500, "Error reading from Snowflake. Check the logs for details.")
+    except Exception as e:
+        abort(500, "Error reading from Snowflake. Check the logs for details: " + str(e))

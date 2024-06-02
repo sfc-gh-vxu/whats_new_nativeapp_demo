@@ -36,7 +36,7 @@ begin
     insert into upgrades.version_history(version) values ('version 0');
 
     -- version initializer callback can be used to upgrade services:
-    -- alter service if exists services.spcs_na_service from spec='service_spec.yml';
+    alter service if exists services.app_service from spec='spec.yml';
     return 'init complete';
 end $$;
 
