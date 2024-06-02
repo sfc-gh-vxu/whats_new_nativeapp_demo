@@ -1,0 +1,9 @@
+spec:
+  containers:
+    - name: eap-backend
+      image: /spcs_na_db/public/images_ujagtap/eap_backend
+      env:
+        SNOWFLAKE_WAREHOUSE: backend_wh
+  endpoints:
+    - name: eap-backend
+      port: 8081

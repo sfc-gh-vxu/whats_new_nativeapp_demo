@@ -1,0 +1,1 @@
+/Users/ujagtap/git/wndemoapp/app/setup.sql

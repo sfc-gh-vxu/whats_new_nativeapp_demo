@@ -1,0 +1,55 @@
+manifest_version: 1
+
+version:
+  name: v1
+  label: Version One
+
+configuration:
+  log_level: INFO
+  trace_level: ALWAYS
+  grant_callback: setup.grant_callback
+
+artifacts:
+  readme: README.md
+  setup_script: setup.sql
+  container_services:
+    images:
+      - /spcs_na_db/public/images_ujagtap/eap_backend
+      - /spcs_na_db/public/images_ujagtap/eap_frontend
+      - /spcs_na_db/public/images_ujagtap/eap_router
+
+  # default_streamlit and default_web_endpoint are mutually exclusive, only one can be specified
+  # default_streamlit: streamlit.test_streamlit
+  default_web_endpoint:
+    service: services.frontend
+    endpoint: app
+
+# ENABLE_NATIVE_APPS_VERSION_INITIALIZER_CALLBACK_IN_MANIFEST
+# ENABLE_NATIVE_APPS_VERSION_INITIALIZER_CALLBACK_IN_SETUP
+lifecycle_callbacks:
+  version_initializer: core.init
+
+privileges:
+  - CREATE COMPUTE POOL:
+      description: "Permission to create services + compute pools"
+  - BIND SERVICE ENDPOINT:
+      description: "Required to create endpoints we can assign to functions and such"
+
+references:
+  - EAI_WIKI:
+      label: "EAI WIKI"
+      description: "EAI for Egress from NA+SPCS"
+      privileges: [USAGE]
+      object_type: EXTERNAL_ACCESS_INTEGRATION
+      register_callback: setup.register_reference
+      configuration_callback: setup.configuration_callback
+      required_at_setup: true
+  
+  - ORDERS_TABLE:
+      label: "Orders table"
+      description: "Orders table in TPC-H samples"
+      privileges:
+        - SELECT
+      object_type: VIEW
+      multi_valued: false
+      register_callback: setup.register_reference
