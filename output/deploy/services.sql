@@ -1,1 +1,1 @@
-/Users/ujagtap/git/wndemoapp/app/services.sql
+/Users/ujagtap/git/whatsnewappdemo/app/services.sql

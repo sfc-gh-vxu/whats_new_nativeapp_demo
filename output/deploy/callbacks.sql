@@ -1,1 +1,1 @@
-/Users/ujagtap/git/wndemoapp/app/callbacks.sql
+/Users/ujagtap/git/whatsnewappdemo/app/callbacks.sql

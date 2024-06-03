@@ -1,13 +1,13 @@
 spec:
   containers:
     - name: eap-frontend
-      image: /spcs_na_db/public/images_ujagtap/eap_frontend
+      image: /spcs_na_db/public/images/eap_frontend
       env:
         VUE_APP_API_URL: /api/snowpark
     - name: eap-backend
-      image: /spcs_na_db/public/images_ujagtap/eap_backend
+      image: /spcs_na_db/public/images/eap_backend
     - name: eap-router
-      image: /spcs_na_db/public/images_ujagtap/eap_router
+      image: /spcs_na_db/public/images/eap_router
       env:
         FE_SERVER: localhost:8080
         BE_SERVER: localhost:8081

@@ -1,7 +1,7 @@
 #!/bin/bash
 DB_NAME="spcs_na_db"
 SCHEMA_NAME="public"
-REPO="images_ujagtap"
+REPO="images"
 
 BACKEND_IMAGE="eap_backend"
 FRONTEND_IMAGE="eap_frontend"

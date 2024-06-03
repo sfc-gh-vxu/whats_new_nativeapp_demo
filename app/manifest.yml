@@ -14,9 +14,9 @@ artifacts:
   setup_script: setup.sql
   container_services:
     images:
-      - /spcs_na_db/public/images_ujagtap/eap_backend
-      - /spcs_na_db/public/images_ujagtap/eap_frontend
-      - /spcs_na_db/public/images_ujagtap/eap_router
+      - /spcs_na_db/public/images/eap_backend
+      - /spcs_na_db/public/images/eap_frontend
+      - /spcs_na_db/public/images/eap_router
 
   # default_streamlit and default_web_endpoint are mutually exclusive, only one can be specified
   # default_streamlit: streamlit.test_streamlit

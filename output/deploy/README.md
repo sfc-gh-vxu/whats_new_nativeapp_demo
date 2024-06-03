@@ -1,1 +1,1 @@
-/Users/ujagtap/git/wndemoapp/app/README.md
+/Users/ujagtap/git/whatsnewappdemo/app/README.md

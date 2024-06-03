@@ -43,8 +43,9 @@ create or replace procedure setup.configuration_callback(ref_name string)
       begin
         case (ref_name)
             when 'EAI_WIKI' then
-                return '{\"type\": \"CONFIGURATION\", \"payload\":{\"host_ports\":[\"upload.wikimedia.org\"],
-                    \"allowed_secrets\" : \"ALL\"}}';
+                --return '{\"type\": \"CONFIGURATION\", \"payload\":{\"host_ports\":[\"upload.wikimedia.org\"],
+                  --  \"allowed_secrets\" : \"ALL\"}}';
+                return '{"type": "CONFIGURATION", "payload": { "host_ports": ["upload.wikimedia.org"], "allowed_secrets": "NONE" } }';
         end case;
         return 'Completed';
       end;
