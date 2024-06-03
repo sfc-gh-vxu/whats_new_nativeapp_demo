@@ -37,8 +37,6 @@ privileges:
   - CREATE WAREHOUSE:
       description: "Required to create a warehouse for querying data"
 
-
-
 references:
   - EAI_WIKI:
       label: "EAI WIKI"
