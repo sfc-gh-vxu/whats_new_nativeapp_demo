@@ -9,7 +9,9 @@ language sql
 execute as owner
 as $$
     begin
-        CREATE COMPUTE POOL if not exists wndemoapp_cp
+        let pool_name := (select current_database()) || '_app_pool';
+
+        CREATE COMPUTE POOL if not exists identifier(:pool_name)
             min_nodes = 1
             max_nodes = 1
             instance_family = CPU_X64_XS;
@@ -17,12 +19,13 @@ as $$
         CREATE WAREHOUSE if not exists query_wh;
 
         CREATE SERVICE if not exists services.app_service
-            in compute pool wndemoapp_cp
+            in compute pool identifier(:pool_name)
             from spec='spec.yml'
             EXTERNAL_ACCESS_INTEGRATIONS = (REFERENCE('EAI_WIKI')),
             QUERY_WAREHOUSE = query_wh;
         grant usage on service services.app_service to application role app_public;
-        
+        grant service role services.app_service!all_endpoints_usage to application role app_public;
+
         return 'Done';
     end;
 $$;
@@ -71,8 +74,9 @@ language sql
 execute as owner
 as $$
     begin
+        let pool_name := (select current_database()) || '_app_pool';
         drop service if exists services.app_service;
-        drop compute pool if exists wndemoapp_cp;
+        drop compute pool if exists identifier(:pool_name);
         return 'Done';
     end;
 $$;

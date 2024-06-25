@@ -1,0 +1,16 @@
+required_compute_pools:
+  - CPU_POOL_1:
+      label: "Compute pool"
+      description: "A compute pool to run EAP software"
+      compatible_instance_families:
+        - CPU_X64_XS
+        - CPU_X64_S
+
+connections:
+  - EAI_WIKI:
+      label: "EAI WIKI"
+      icon: LAUNCHDARKLY
+      description: "External access to wiki pages"
+      required: true
+      endpoints:
+        - "upload.wikimedia.org"

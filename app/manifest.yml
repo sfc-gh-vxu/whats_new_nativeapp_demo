@@ -40,7 +40,7 @@ privileges:
 references:
   - EAI_WIKI:
       label: "EAI WIKI"
-      description: "EAI for Egress from NA+SPCS"
+      description: "External access to wiki pages"
       privileges: [USAGE]
       object_type: EXTERNAL_ACCESS_INTEGRATION
       register_callback: setup.register_reference
